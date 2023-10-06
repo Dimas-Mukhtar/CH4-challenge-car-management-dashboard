@@ -1,5 +1,6 @@
 const { Car } = require("../models")
 const { Op } = require("sequelize")
+const imagekit = require("../lib/imageKit")
 
 const mainPage = async (req, res) => {
     try {
@@ -51,12 +52,20 @@ const createPage = (req, res) => {
 }
 
 const createCar = async (req, res) => {
+    const file = req.file
     try {
-        const car = await Car.create({
+        const split = file.originalname.split(".")
+        const extension = split[split.length - 1]
+
+        const img = await imagekit.upload({
+            file: file.buffer,
+            fileName: `IMG-${Date.now()}.${extension}`
+        })
+        await Car.create({
             name: req.body.name,
             price: req.body.price,
             category: req.body.category,
-            image: req.file.filename
+            image: img.url
         })
         req.session.message = {
             type: "success",
@@ -89,7 +98,7 @@ const editePage = async (req, res) => {
 const editeCar = async (req, res) => {
     const id = req.params.id
     try {
-        const car = await Car.update(
+        await Car.update(
             {
                 name: req.body.name,
                 price: req.body.price,
@@ -99,10 +108,12 @@ const editeCar = async (req, res) => {
         )
         req.session.message = {
             type: "success",
-            message: "Car updated successfully!"
+            message:
+                "Car updated successfully!, but I'm sorry that you haven't been able to update the photo, yeah I need some research"
         }
         res.redirect("/admin")
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             status: "Failed",
             message: error.message
@@ -113,7 +124,7 @@ const editeCar = async (req, res) => {
 const deleteCar = async (req, res) => {
     const id = req.params.id
     try {
-        const deleteCar = await Car.destroy({ where: { id } })
+        await Car.destroy({ where: { id } })
         req.session.message = {
             type: "dark",
             message: "Car deleted successfully!"

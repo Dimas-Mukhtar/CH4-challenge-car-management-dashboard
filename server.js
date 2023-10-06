@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 app.use("/admin", require("./routes/adminRouter"))
 // api
-app.use("/api/v1/cars", require("./routes/api/carsController"))
+app.use("/api/v1/cars", require("./routes/api/carsRouter"))
 app.listen(PORT, () => {
     console.log(`Server is listening on http://localhost:${PORT}`)
 })

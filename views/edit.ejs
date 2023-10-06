@@ -95,7 +95,7 @@
                                 </h5>
                             </div>
 
-                            <form action="/admin/edite-action/<%= car.id %>" method="post">
+                            <form action="/admin/edite-action/<%= car.id %>" method="post" enctype="multipart/form-data">
                                 <div class="bg__white mt-2">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -132,7 +132,7 @@
                                                     <p>Foto<i style="color: #FA2C5A;">*</i></p>
                                                 </div>
                                                 <div class="col-lg-8">
-                                                    <input name="old_image" class="form-control" type="file" id="formFile" value="<%= car.image %>">
+                                                    <input type="file" name="image" class="form-control" id="formFile">
                                                     <small>File size max. 2MB</small>
                                                 </div>
                                             </div>

@@ -12,22 +12,26 @@ repository untuk menyelesaikan challenge chapter 4
 
 #### Features
 
-> Read car data
-> Create car data
-> Update car data
-> Delete car data
-> Search by name
-> Filter by category
+> -   Read car data
+> -   Create car data
+> -   Update car data
+> -   Delete car data
+> -   Search by name
+> -   Filter by category
 
 ###### Please follow the steps below carefully in order to run this project successfully.
 
-#### 1. Download this project in zip format then extract and open it on your code editor or just git clone
+#### 1. Download this project in zip format then extract and open it on your code editor or just git clone.
 
 ```shell
 git clone https://github.com/Dimas-Mukhtar/CH4-challenge-car-management-dashboard.git
 ```
 
-#### 2. Install all the package and sequelize-cli globally
+```shell
+cd CH4-challenge-car-management-dashboard
+```
+
+#### 2. Install all the package and sequelize-cli globally.
 
 ```shell
 npm install
@@ -37,7 +41,7 @@ npm install
 npm install -g sequelize-cli
 ```
 
-#### 3. Create .env file in the root directory, The file should have the same content as the .env.example file.
+#### 3. Create .env file in the root directory, The file should have the same attribute as the .env.example file and customize the value according to your configuration.
 
 ```shell
 PORT=3000
@@ -45,9 +49,13 @@ DB_USERNAME=YourDatabaseUsername
 DB_PASSWORD=YourDatabasePassword
 DB_NAME=YourDatabaseName
 DB_HOST=YourDatabaseHost
+
+PUBLIC_KEY=YourPublicKey
+PRIVATE_KEY=YourPrivateKey
+URL_ENDPOINT=YourUrlEndpoint
 ```
 
-#### 4. Create your database for this project
+#### 4. Create your database for this project.
 
 ```shell
 sequelize db:create
@@ -59,13 +67,13 @@ sequelize db:create
 sequelize db:migrate
 ```
 
-#### 6. The project setup is complete, let's run the project
+#### 6. The project setup is complete, let's run the project.
 
 ```shell
 node server.js
 ```
 
-#### 7. Open in your browser
+#### 7. Open in your browser.
 
 ```shell
 http://localhost:3000/admin
@@ -118,6 +126,18 @@ http://localhost:3000/admin
 ```
 
 ##### create car ~ POST: /api/v1/cars
+
+###### req.body
+
+```shell
+{
+    "name": "Bukan lambhorgini",
+    "price": 1000000,
+    "category": "Large",
+    "image": "lamborghini.png"
+}
+
+```
 
 ```shell
 {
