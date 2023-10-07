@@ -98,18 +98,38 @@ const editePage = async (req, res) => {
 const editeCar = async (req, res) => {
     const id = req.params.id
     try {
-        await Car.update(
-            {
-                name: req.body.name,
-                price: req.body.price,
-                category: req.body.category
-            },
-            { where: { id } }
-        )
+        let imgUrl = ""
+        const file = req.file
+        if (file) {
+            const split = file.originalname.split(".")
+            const extension = split[split.length - 1]
+
+            const img = await imagekit.upload({
+                file: file.buffer,
+                fileName: `IMG-${Date.now()}.${extension}`
+            })
+            imgUrl = img.url
+        }
+        if (imgUrl) {
+            await Car.update(
+                {
+                    image: imgUrl
+                },
+                { where: { id } }
+            )
+        } else {
+            await Car.update(
+                {
+                    name: req.body.name,
+                    price: req.body.price,
+                    category: req.body.category
+                },
+                { where: { id } }
+            )
+        }
         req.session.message = {
             type: "success",
-            message:
-                "Car updated successfully!, but I'm sorry that you haven't been able to update the photo, yeah I need some research"
+            message: "Car updated successfully!"
         }
         res.redirect("/admin")
     } catch (error) {
